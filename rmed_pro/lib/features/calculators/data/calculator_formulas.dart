@@ -8,18 +8,20 @@ class CalculationResultData {
   CalculationResultData(this.value, this.interpretation);
 }
 
+// lib/features/calculators/data/calculator_formulas.dart (New Code)
 class BmiCalculator {
-  static const id = 'bmi';
+  static const id = 'bmi'; // Matches the ID in your JSON data
 
   static CalculationResultData calculate({
     required double weight, // in kg
-    required double height, // in meters
+    required double height, // in cm
   }) {
     if (height <= 0) {
-        return CalculationResultData(0, 'Height must be positive.');
+      return CalculationResultData(0, 'Height must be positive.');
     }
     
-    final bmi = weight / (height * height);
+    final heightInMeters = height / 100;
+    final bmi = weight / (heightInMeters * heightInMeters);
     String interpretation;
 
     if (bmi < 18.5) {
@@ -34,4 +36,12 @@ class BmiCalculator {
     
     return CalculationResultData(bmi, interpretation);
   }
+}
+
+// Helper class for return type
+class CalculationResultData {
+  final double value;
+  final String interpretation;
+
+  CalculationResultData(this.value, this.interpretation);
 }

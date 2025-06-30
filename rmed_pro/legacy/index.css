@@ -1,0 +1,1272 @@
+/* Basic Reset & Defaults */
+:root {
+  --primary-color: #3498db; /* Bright blue */
+  --primary-color-dark: #2980b9;
+  --secondary-color: #2c3e50; /* Dark blue-gray */
+  --secondary-color-darker: #23313f; /* For subtle gradient */
+  --light-bg: #f4f7f9;
+  --white: #ffffff;
+  --text-color: #333333;
+  --text-light: #555555;
+  --text-medium: #444444;
+  --border-color: #cccccc;
+  --border-light: #e0e0e0;
+  --error-bg: #f8d7da;
+  --error-border: #f5c6cb;
+  --error-text: #721c24;
+  --success-bg: #e9f5fd;
+  --success-border: #bde0fe;
+  --success-text-heading: #1d4e89;
+  --success-text-value: #153a69;
+  --footer-bg: #34495e;
+  --footer-text: #bdc3c7;
+  --footer-link: #ecf0f1;
+  --critical-low-color: #e74c3c; /* Red for low critical */
+  --critical-high-color: #e74c3c; /* Red for high critical (can be same or different) */
+
+  --hover-bg-light: rgba(0,0,0,0.03);
+  --focus-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25); /* primary-color with alpha */
+  --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  --lifted-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+/* Dark Mode Variables */
+body.dark-mode {
+  --primary-color: #4a90e2;
+  --primary-color-dark: #357ABD;
+  --secondary-color: #1e2a38;
+  --secondary-color-darker: #141c24;
+  --light-bg: #121212; /* Main dark background */
+  --white: #1e1e1e; /* Card backgrounds in dark mode */
+  --text-color: #e0e0e0; /* Light text for dark mode */
+  --text-light: #a0a0a0;
+  --text-medium: #c0c0c0;
+  --border-color: #444444;
+  --border-light: #333333;
+  --error-bg: #4a2a2a;
+  --error-border: #6b3e3e;
+  --error-text: #ffb3b3;
+  --success-bg: #2a4a3a;
+  --success-border: #3e6b4e;
+  --success-text-heading: #a8d5ba;
+  --success-text-value: #c1e6cf;
+  --footer-bg: #141c24;
+  --footer-text: #a0a0a0;
+  --footer-link: #c0c0c0;
+  --critical-low-color: #ff7b7b;
+  --critical-high-color: #ff7b7b;
+
+  --hover-bg-light: rgba(255,255,255,0.05);
+  --focus-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3);
+  --card-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  --lifted-shadow: 0 6px 15px rgba(0,0,0,0.45);
+}
+
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+  background-color: var(--light-bg);
+  color: var(--text-color);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#root {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* App Header */
+.app-header {
+  background-image: linear-gradient(to bottom, var(--secondary-color), var(--secondary-color-darker));
+  color: var(--white); /* Text color in header will be light in light mode, dark in dark mode if --white is redefined */
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+body.dark-mode .app-header {
+  color: var(--text-color); /* Light text for dark header */
+}
+
+
+.app-title-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.view-switcher {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.view-switch-button {
+  background-color: transparent;
+  color: var(--light-bg);
+  border: 1px solid var(--light-bg);
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  opacity: 0.7;
+  transition: opacity 0.2s ease, background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+body.dark-mode .view-switch-button {
+  color: var(--text-color); /* Light text for dark header button */
+  border-color: var(--text-color);
+}
+
+
+.view-switch-button.active {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--white); /* Will be dark text on primary-color bg in dark mode if --white is dark. */
+  opacity: 1;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+body.dark-mode .view-switch-button.active {
+  color: #ffffff; /* Explicit white text on active button in dark mode */
+}
+
+.view-switch-button:not(.active):hover,
+.view-switch-button:not(.active):focus {
+  opacity: 1;
+  background-color: rgba(255,255,255,0.1); /* This is fine for both modes */
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.header-actions-area {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Dark Mode Toggle Button & Install App Button */
+.dark-mode-toggle-button,
+.install-app-button {
+  background-color: var(--light-bg);
+  color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  white-space: nowrap;
+}
+.dark-mode-toggle-button:hover, .dark-mode-toggle-button:focus,
+.install-app-button:hover, .install-app-button:focus {
+  background-color: var(--border-light);
+  outline: none;
+  transform: scale(1.03) translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+body.dark-mode .dark-mode-toggle-button,
+body.dark-mode .install-app-button {
+  background-color: var(--primary-color);
+  color: #ffffff; /* Explicit white text */
+  border-color: var(--primary-color-dark);
+}
+body.dark-mode .dark-mode-toggle-button:hover, body.dark-mode .dark-mode-toggle-button:focus,
+body.dark-mode .install-app-button:hover, body.dark-mode .install-app-button:focus {
+  background-color: var(--primary-color-dark);
+}
+
+
+/* App Container */
+.app-container {
+  display: flex;
+  flex-grow: 1;
+  padding: 1.5rem;
+  gap: 1.5rem;
+}
+
+/* Shared styles for Lookup Panels */
+.abbreviation-lookup-panel,
+.medical-terminology-panel,
+.lab-values-panel,
+.mnemonics-panel,
+.nutrition-guide-panel,
+.procedures-panel {
+  flex-grow: 1;
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  transition: box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.abbreviation-lookup-panel h3,
+.medical-terminology-panel h3,
+.lab-values-panel h3,
+.mnemonics-panel h3,
+.nutrition-guide-panel h3,
+.procedures-panel h3 {
+  margin-top: 0;
+  color: var(--secondary-color);
+  font-size: 1.4rem;
+  border-bottom: 2px solid var(--border-light);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+body.dark-mode .abbreviation-lookup-panel h3,
+body.dark-mode .medical-terminology-panel h3,
+body.dark-mode .lab-values-panel h3,
+body.dark-mode .mnemonics-panel h3,
+body.dark-mode .nutrition-guide-panel h3,
+body.dark-mode .procedures-panel h3 {
+  color: var(--text-color); /* Light heading for dark mode panels */
+  border-bottom-color: var(--border-color);
+}
+
+
+/* Custom Scrollbar for lists */
+.abbreviation-list::-webkit-scrollbar,
+.terminology-list::-webkit-scrollbar,
+.lab-values-list::-webkit-scrollbar,
+.mnemonics-list::-webkit-scrollbar,
+.guidelines-list::-webkit-scrollbar,
+.procedures-list::-webkit-scrollbar {
+  width: 8px;
+}
+.abbreviation-list::-webkit-scrollbar-track,
+.terminology-list::-webkit-scrollbar-track,
+.lab-values-list::-webkit-scrollbar-track,
+.mnemonics-list::-webkit-scrollbar-track,
+.guidelines-list::-webkit-scrollbar-track,
+.procedures-list::-webkit-scrollbar-track {
+  background: var(--light-bg);
+  border-radius: 4px;
+}
+.abbreviation-list::-webkit-scrollbar-thumb,
+.terminology-list::-webkit-scrollbar-thumb,
+.lab-values-list::-webkit-scrollbar-thumb,
+.mnemonics-list::-webkit-scrollbar-thumb,
+.guidelines-list::-webkit-scrollbar-thumb,
+.procedures-list::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 4px;
+  border: 2px solid var(--light-bg);
+}
+.abbreviation-list::-webkit-scrollbar-thumb:hover,
+.terminology-list::-webkit-scrollbar-thumb:hover,
+.lab-values-list::-webkit-scrollbar-thumb:hover,
+.mnemonics-list::-webkit-scrollbar-thumb:hover,
+.guidelines-list::-webkit-scrollbar-thumb:hover,
+.procedures-list::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-light);
+}
+
+
+.abbreviation-list,
+.terminology-list,
+.lab-values-list,
+.mnemonics-list,
+.guidelines-list,
+.procedures-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--border-color) var(--light-bg); /* Firefox */
+}
+
+/* Styles for items within lookup panels */
+.abbreviation-item,
+.terminology-item,
+.lab-value-item,
+.mnemonic-item {
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border-light);
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  background-color: var(--white);
+}
+
+.abbreviation-item:hover,
+.terminology-item:hover,
+.lab-value-item:hover,
+.mnemonic-item:hover {
+  background-color: var(--hover-bg-light);
+  transform: translateY(-2px);
+  box-shadow: var(--lifted-shadow);
+  border-color: transparent;
+}
+
+.abbreviation-item:last-child,
+.terminology-item:last-child,
+.lab-value-item:last-child,
+.mnemonic-item:last-child {
+  margin-bottom: 0;
+}
+
+/* NEW: Header for Abbreviation and Terminology Items */
+.abbreviation-header,
+.terminology-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  gap: 0.5rem;
+}
+
+.abbreviation-abbr,
+.terminology-term {
+  font-weight: 600;
+  color: var(--primary-color-dark);
+  font-size: 1.2rem;
+}
+body.dark-mode .abbreviation-abbr,
+body.dark-mode .terminology-term {
+  color: var(--primary-color);
+}
+
+/* NEW: Category Tags */
+.abbreviation-category-tag,
+.terminology-category-tag {
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+body.dark-mode .abbreviation-category-tag,
+body.dark-mode .terminology-category-tag {
+  background-color: var(--primary-color-dark);
+  color: #e0e0e0;
+}
+
+.abbreviation-fullform {
+  display: block;
+  font-style: italic;
+  color: var(--text-color);
+  margin: 0.2rem 0 0.5rem 0;
+}
+
+.abbreviation-desc,
+.terminology-definition {
+  font-size: 0.95rem;
+  color: var(--text-color);
+  margin: 0.3rem 0;
+}
+
+/* NEW: Terminology Details section */
+.terminology-details {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background-color: var(--light-bg);
+  border-left: 3px solid var(--primary-color);
+  border-radius: 4px;
+}
+body.dark-mode .terminology-details {
+    background-color: var(--secondary-color-darker);
+    border-left-color: var(--primary-color-dark);
+}
+.terminology-detail-item {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin: 0.25rem 0 !important;
+}
+.terminology-detail-item strong {
+  color: var(--text-medium);
+  font-weight: 500;
+}
+.terminology-detail-item em {
+    font-style: italic;
+    color: var(--text-color);
+}
+
+.abbreviation-notes {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--text-light);
+  padding: 0.5rem;
+  background-color: var(--light-bg);
+  border-radius: 4px;
+}
+body.dark-mode .abbreviation-notes {
+    background-color: var(--secondary-color-darker);
+}
+.abbreviation-notes strong {
+  font-style: normal;
+  color: var(--text-medium);
+}
+
+/* NEW: Footer for Abbreviation and Terminology Items */
+.abbreviation-footer,
+.terminology-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-light);
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+.abbreviation-footer strong,
+.terminology-footer strong {
+  color: var(--text-medium);
+}
+.abbreviation-codes,
+.terminology-codes {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Lab Values Panel specific styles / Also used for Nutrition/Procedure disclaimer */
+.lab-values-disclaimer {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: var(--light-bg);
+  border: 1px dashed var(--border-color);
+  border-radius: 6px;
+}
+body.dark-mode .lab-values-disclaimer {
+  background-color: var(--border-light);
+  border-color: var(--border-color);
+}
+.lab-value-testname {
+  font-weight: bold;
+  color: var(--primary-color-dark);
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+.lab-value-category {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--text-light);
+  margin-bottom: 0.3rem;
+  background-color: var(--light-bg);
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+}
+body.dark-mode .lab-value-category {
+  background-color: var(--border-light);
+}
+.lab-value-range {
+  font-size: 1rem;
+  color: var(--text-color);
+  margin: 0.3rem 0;
+}
+.lab-value-range strong {
+  color: var(--text-medium);
+}
+.lab-value-description,
+.lab-value-notes {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin: 0.3rem 0 0 0;
+}
+.lab-value-notes em {
+  color: var(--text-medium);
+  font-style: normal;
+  font-weight: 500;
+}
+.lab-value-critical {
+  font-size: 0.9rem;
+  margin: 0.3rem 0 0 0;
+  color: var(--critical-low-color);
+}
+.lab-value-critical strong {
+  color: var(--text-color);
+}
+
+/* Mnemonics Panel specific styles */
+.mnemonic-title {
+  font-weight: bold;
+  color: var(--primary-color-dark);
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+.mnemonic-stands-for {
+  font-size: 0.95rem;
+  color: var(--text-color);
+  margin: 0.2rem 0;
+  line-height: 1.4;
+}
+.mnemonic-stands-for em {
+  font-style: normal;
+  color: var(--text-medium);
+  font-weight: 500;
+}
+.mnemonic-topic {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin: 0.4rem 0 0.2rem 0;
+}
+.mnemonic-topic em {
+  font-style: normal;
+  color: var(--text-medium);
+  font-weight: 500;
+}
+.mnemonic-category {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--text-light);
+  margin-top: 0.3rem;
+  background-color: var(--light-bg);
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+}
+body.dark-mode .mnemonic-category {
+  background-color: var(--border-light);
+}
+
+/* Nutrition Guide Panel & Procedures Panel specific styles (shared for expandable items) */
+.guideline-item,
+.procedure-item-container {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.guideline-item:last-child,
+.procedure-item-container:last-child {
+  border-bottom: none;
+}
+
+.guideline-title.expandable,
+.procedure-title.expandable {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s ease;
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+.guideline-title.expandable:hover, .guideline-title.expandable:focus,
+.procedure-title.expandable:hover, .procedure-title.expandable:focus {
+  color: var(--primary-color);
+  outline: none;
+}
+
+.expand-icon {
+  font-size: 1em;
+  transition: transform 0.2s ease-out;
+  display: inline-block;
+}
+
+
+.guideline-content-collapsible,
+.procedure-content-collapsible {
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+
+.guideline-list-title {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: bold;
+  color: var(--text-medium);
+}
+.guideline-subsection,
+.procedure-detail-section {
+  margin-top: 1rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--primary-color);
+}
+.guideline-subtitle {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: var(--primary-color-dark);
+}
+body.dark-mode .guideline-subtitle {
+  color: var(--primary-color);
+}
+
+.nutrition-guide-panel .details-list,
+.procedures-panel .details-list {
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
+}
+.nutrition-guide-panel .details-list li,
+.procedures-panel .details-list li {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  line-height: 1.6;
+  margin-bottom: 0.25rem;
+}
+.nutrition-guide-panel p,
+.procedures-panel p {
+  font-size: 0.95rem;
+  color: var(--text-color);
+  line-height: 1.6;
+  margin: 0.5rem 0;
+}
+
+
+/* Calculator List Panel (Aside) */
+.calculator-list-panel {
+  flex: 0 0 320px;
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  height: fit-content;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.search-bar-container {
+  margin-bottom: 1rem;
+}
+
+.calculator-search-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  background-color: var(--white);
+  color: var(--text-color);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+body.dark-mode .calculator-search-input {
+  background-color: var(--light-bg); /* Darker input field in dark mode */
+  border-color: var(--border-light);
+}
+.calculator-search-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: var(--focus-shadow);
+}
+.calculator-search-input::placeholder {
+  color: var(--text-light);
+  opacity: 1;
+}
+
+.calculator-select-container {
+  margin-bottom: 1rem;
+}
+
+.calculator-select,
+.input-field-wrapper select {
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.4-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right .7em top 50%;
+  background-size: .65em auto;
+  padding: 0.75rem;
+  padding-right: 2.5em;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--white);
+  color: var(--text-color);
+  font-size: 1rem;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+body.dark-mode .calculator-select,
+body.dark-mode .input-field-wrapper select {
+  background-color: var(--light-bg); /* Darker select field in dark mode */
+  border-color: var(--border-light);
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23a0a0a0%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.4-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E');
+}
+
+.calculator-select:focus,
+.input-field-wrapper select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: var(--focus-shadow);
+}
+
+.calculator-select {
+  width: 100%;
+}
+.calculator-select option[disabled] {
+  color: var(--text-light);
+}
+body.dark-mode .calculator-select option {
+  background-color: var(--light-bg);
+  color: var(--text-color);
+}
+
+.no-results-text {
+  color: var(--text-light);
+  font-style: italic;
+  padding: 0.5rem 0;
+}
+
+/* Calculator Interface Panel (Main) */
+.calculator-interface-panel {
+  flex-grow: 1;
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  transition: box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.calculator-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--border-light);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+body.dark-mode .calculator-title-container {
+  border-bottom-color: var(--border-color);
+}
+
+.calculator-interface-panel h3 {
+  margin-top: 0;
+  color: var(--secondary-color);
+  font-size: 1.4rem;
+  margin-bottom: 0;
+}
+body.dark-mode .calculator-interface-panel h3 {
+  color: var(--text-color);
+}
+
+.clear-inputs-button {
+  background-color: var(--white);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+body.dark-mode .clear-inputs-button {
+  background-color: var(--light-bg); /* Darker button bg */
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.clear-inputs-button:hover, .clear-inputs-button:focus {
+  background-color: var(--primary-color-dark);
+  color: var(--white); /* Will be dark in dark mode if --white is dark */
+  border-color: var(--primary-color-dark);
+  outline: none;
+  transform: scale(1.03) translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+body.dark-mode .clear-inputs-button:hover, body.dark-mode .clear-inputs-button:focus {
+  background-color: var(--primary-color-dark);
+  color: #ffffff; /* Explicit white text on hover */
+}
+
+
+.placeholder-text {
+  color: var(--text-light);
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Input Group Styling */
+.input-group {
+  margin-bottom: 1.25rem;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-medium);
+}
+
+.input-field-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.input-field-wrapper input[type="number"] {
+  flex-grow: 1;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background-color: var(--white);
+  color: var(--text-color);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+body.dark-mode .input-field-wrapper input[type="number"] {
+  background-color: var(--light-bg);
+  border-color: var(--border-light);
+}
+.input-field-wrapper input[type="number"]:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: var(--focus-shadow);
+}
+
+.input-field-wrapper input[type="number"]::placeholder {
+  color: var(--text-light);
+  opacity: 1;
+}
+.input-field-wrapper input[type="number"]::-webkit-input-placeholder {
+  color: var(--text-light);
+  opacity: 1;
+}
+.input-field-wrapper input[type="number"]::-moz-placeholder {
+  color: var(--text-light);
+  opacity: 1;
+}
+.input-field-wrapper input[type="number"]:-ms-input-placeholder {
+  color: var(--text-light);
+  opacity: 1;
+}
+.input-field-wrapper input[type="number"]:-moz-placeholder {
+  color: var(--text-light);
+  opacity: 1;
+}
+
+
+.input-field-wrapper select {
+  flex-grow: 1;
+}
+
+
+.unit-switcher {
+  display: flex;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.unit-switcher button {
+  background-color: #f0f0f0;
+  color: var(--text-color);
+  border: none;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-left: 1px solid var(--border-color);
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+body.dark-mode .unit-switcher {
+  border-color: var(--border-light);
+}
+body.dark-mode .unit-switcher button {
+  background-color: var(--border-light); /* Darker button bg */
+  color: var(--text-color);
+  border-left-color: var(--border-color);
+}
+
+.unit-switcher button:first-child {
+  border-left: none;
+}
+
+.unit-switcher button.active {
+  background-color: var(--primary-color-dark);
+  color: var(--white); /* Dark text for dark mode active button if --white is dark */
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+body.dark-mode .unit-switcher button.active {
+  color: #ffffff; /* Explicit white text for active button */
+}
+
+.unit-switcher button:not(.active):hover, .unit-switcher button:not(.active):focus {
+  background-color: var(--border-light);
+  outline: none;
+}
+body.dark-mode .unit-switcher button:not(.active):hover,
+body.dark-mode .unit-switcher button:not(.active):focus {
+  background-color: var(--border-color);
+}
+.unit-switcher button:focus-visible {
+  outline: 2px solid var(--primary-color-dark);
+  outline-offset: -2px;
+  position:relative;
+  z-index:1;
+}
+
+.static-unit-display {
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  background-color: #f8f9fa;
+  border: 1px solid var(--border-light);
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+  white-space: nowrap;
+}
+body.dark-mode .static-unit-display {
+  background-color: var(--light-bg);
+  border-color: var(--border-light);
+}
+
+/* Result Display */
+.result-group {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  background-color: var(--success-bg);
+  border: 1px solid var(--success-border);
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.result-group h4 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  color: var(--success-text-heading);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+body.dark-mode .result-group h4 {
+  color: var(--success-text-heading);
+}
+
+.result-group p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  color: var(--success-text-value);
+}
+body.dark-mode .result-group p {
+  color: var(--success-text-value);
+}
+
+.result-group .value {
+  font-weight: bold;
+}
+
+.result-group .unit {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+body.dark-mode .result-group .unit {
+  color: var(--text-light);
+}
+
+.interpreted-result {
+  margin-top: 1rem;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--text-medium);
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--success-border);
+}
+body.dark-mode .interpreted-result {
+  color: var(--text-medium);
+  border-top-color: var(--success-border);
+}
+
+/* Feedback styling for results (errors, instructions) */
+.result-group.result-feedback {
+  background-color: var(--error-bg);
+  border-color: var(--error-border);
+}
+.result-group.result-feedback h4 {
+  color: var(--error-text);
+}
+.result-group.result-feedback p,
+.result-group.result-feedback .result-text-alert .value {
+  color: var(--error-text);
+  font-weight: normal; /* Override bold for .value in error messages */
+}
+body.dark-mode .result-group.result-feedback {
+  background-color: var(--error-bg);
+  border-color: var(--error-border);
+}
+body.dark-mode .result-group.result-feedback h4,
+body.dark-mode .result-group.result-feedback p,
+body.dark-mode .result-group.result-feedback .result-text-alert .value {
+  color: var(--error-text);
+}
+
+
+/* Calculator Details (Formula & Notes) */
+.calculator-details {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  background-color: var(--light-bg);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+}
+body.dark-mode .calculator-details {
+  background-color: var(--secondary-color-darker);
+  border-color: var(--border-color);
+}
+
+.calculator-details .details-subheading {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  color: var(--secondary-color);
+  font-weight: 600;
+}
+body.dark-mode .calculator-details .details-subheading {
+  color: var(--text-color);
+}
+
+.calculator-details p,
+.calculator-details .details-list li {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  line-height: 1.5;
+  margin: 0.3rem 0;
+}
+body.dark-mode .calculator-details p,
+body.dark-mode .calculator-details .details-list li {
+  color: var(--text-light);
+}
+
+.calculator-details .details-list {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.calculator-details .details-formula {
+  font-family: "Courier New", Courier, monospace;
+  white-space: pre-wrap; /* To respect newlines in formula strings */
+  background-color: var(--white);
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  font-size: 0.9rem;
+  overflow-x: auto;
+}
+body.dark-mode .calculator-details .details-formula {
+  background-color: var(--light-bg);
+  border-color: var(--border-light);
+  color: var(--text-color);
+}
+
+.structured-details .details-subheading {
+  margin-top: 1rem; /* Add space between structured detail sections */
+}
+.structured-details .details-subheading:first-of-type {
+  margin-top: 0;
+}
+
+
+/* Screen-reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* App Footer */
+.app-footer {
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  font-size: 0.85rem;
+  margin-top: auto; /* Pushes footer to bottom */
+}
+.app-footer p {
+  margin: 0.5rem 0;
+  line-height: 1.4;
+}
+.app-footer a {
+  color: var(--footer-link);
+  text-decoration: none;
+  font-weight: 500;
+}
+.app-footer a:hover, .app-footer a:focus {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+body.dark-mode .app-footer {
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
+}
+body.dark-mode .app-footer a {
+  color: var(--footer-link);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .app-container {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .calculator-list-panel {
+    flex: 1 1 auto; /* Allow it to grow and shrink */
+    width: 100%; /* Full width on smaller screens */
+    margin-bottom: 1rem;
+    height: auto; /* Adjust height */
+  }
+  .abbreviation-lookup-panel,
+  .medical-terminology-panel,
+  .lab-values-panel,
+  .mnemonics-panel,
+  .nutrition-guide-panel,
+  .procedures-panel {
+    padding: 1rem;
+  }
+
+  .abbreviation-list,
+  .terminology-list,
+  .lab-values-list,
+  .mnemonics-list,
+  .guidelines-list,
+  .procedures-list {
+    max-height: 60vh; /* Adjust max height for lists on smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    padding: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .app-title-area {
+    width: 100%;
+  }
+  .header-actions-area {
+    width: 100%;
+    justify-content: space-between; /* Better spacing for toggle */
+    flex-wrap: wrap; /* Allow buttons to wrap if needed */
+  }
+  .dark-mode-toggle-button,
+  .install-app-button {
+     flex-grow: 1; /* Allow buttons to share space */
+     min-width: 120px; /* Ensure buttons don't get too small */
+  }
+
+  .view-switcher {
+    gap: 0.3rem;
+    flex-wrap: wrap; /* Ensure wrapping */
+  }
+  .view-switch-button {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.6rem;
+  }
+  .dark-mode-toggle-button,
+  .install-app-button {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .input-field-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .input-field-wrapper input[type="number"],
+  .input-field-wrapper select {
+    width: 100%; /* Ensure inputs take full width in column layout */
+  }
+  .unit-switcher {
+    width: 100%;
+    justify-content: space-around;
+  }
+  .unit-switcher button {
+    flex-grow: 1;
+    text-align: center;
+  }
+  .static-unit-display {
+    width: 100%;
+    text-align: center;
+    border-left: 1px solid var(--border-light); /* Add left border when stacked */
+    border-radius: 4px; /* Full radius if it's alone or stacked */
+    margin-top: 0.5rem; /* Add some space when stacked below input */
+  }
+  body.dark-mode .static-unit-display {
+     border-left-color: var(--border-color);
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header h1 {
+    font-size: 1.3rem;
+  }
+  .view-switch-button {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+  }
+  .dark-mode-toggle-button,
+  .install-app-button {
+    width: 100%; /* Full width toggle button */
+    margin-top: 0.5rem; /* Add space between buttons if they stack */
+  }
+  .header-actions-area {
+    gap: 0.5rem; /* Reduce gap for stacked buttons */
+  }
+
+
+  .calculator-interface-panel,
+  .abbreviation-lookup-panel,
+  .medical-terminology-panel,
+  .lab-values-panel,
+  .mnemonics-panel,
+  .nutrition-guide-panel,
+  .procedures-panel {
+    padding: 0.75rem;
+  }
+
+  .calculator-interface-panel h3,
+  .abbreviation-lookup-panel h3,
+  .medical-terminology-panel h3,
+  .lab-values-panel h3,
+  .mnemonics-panel h3,
+  .nutrition-guide-panel h3,
+  .procedures-panel h3 {
+    font-size: 1.2rem;
+  }
+
+  .result-group {
+    padding: 1rem;
+  }
+  .result-group h4 {
+    font-size: 1.1rem;
+  }
+
+  .app-footer {
+    padding: 1rem;
+    font-size: 0.8rem;
+  }
+}
