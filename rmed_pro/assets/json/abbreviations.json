@@ -1,0 +1,22 @@
+[
+    {
+        "abbr": "BP",
+        "expansion": "Blood Pressure"
+    },
+    {
+        "abbr": "HR",
+        "expansion": "Heart Rate"
+    },
+    {
+        "abbr": "Rx",
+        "expansion": "Prescription"
+    },
+    {
+        "abbr": "q.d.",
+        "expansion": "every day"
+    },
+    {
+        "abbr": "b.i.d.",
+        "expansion": "twice a day"
+    }
+]

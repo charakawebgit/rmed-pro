@@ -1,0 +1,14 @@
+[
+  {
+    "id": "bmi",
+    "name": "Body Mass Index (BMI)",
+    "description": "Calculate BMI to assess body weight status based on height and weight.",
+    "category": "General"
+  },
+  {
+    "id": "egfr",
+    "name": "eGFR (CKD-EPI)",
+    "description": "Estimated Glomerular Filtration Rate for assessing kidney function.",
+    "category": "Nephrology"
+  }
+]
